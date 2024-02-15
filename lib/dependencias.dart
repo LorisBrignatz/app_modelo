@@ -23,7 +23,7 @@ class _DependenciasState extends State<Dependencias> {
                 onChanged: (value) {
                   print(value);
                 },
-              )
+              ),
             ],
           ),
         ),
