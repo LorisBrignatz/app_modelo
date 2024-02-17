@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 class drawerWidget extends StatefulWidget {
-  const drawerWidget({super.key});
-    super.key,
-}),
+  const drawerWidget({Key? key}) : super(key: key);
 
-@override
+  @override
+  _DrawerWidgetState createState() => _DrawerWidgetState();
+}
+
+class _DrawerWidgetState extends State<drawerWidget> {
+  @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
@@ -78,3 +81,4 @@ class drawerWidget extends StatefulWidget {
       ),
     );
   }
+}

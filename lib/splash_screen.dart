@@ -1,4 +1,5 @@
 import 'package:app/login.dart';
+import 'package:app/registra.dart';
 import 'package:flutter/material.dart';
 import 'package:app/constantes.dart' as con;
 
@@ -20,7 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("imagenes/Welcome 1.png"),
-                fit: BoxFit.fill
+                fit: BoxFit.fill,
+                colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.darken),
               )
             ),
           ),
@@ -64,7 +66,11 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Align(
             alignment: Alignment.bottomCenter,
             child: ElevatedButton(
-              onPressed: (){},
+              onPressed: (){
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => const Login()));
+              },
               child: const Text(
                   'Iniciar sesión',
                   style: TextStyle(color:con.blanco, fontSize: 20),
@@ -85,10 +91,23 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('No tienes cuenta? '),
+                Text(
+                    'No tienes una cuenta? ',
+                    style: TextStyle(color: con.blanco)
+                ),
                 TextButton(
-                    onPressed: (){},
-                    child: const Text('Registrate', style: TextStyle(color: con.naranja),
+                    onPressed: (){
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => const Registra()));
+                    },
+                    child: const Text(
+                      'Registrate',
+                      style: TextStyle(
+                          color: con.naranja,
+                          decoration: TextDecoration.underline,
+                          decorationThickness: 1,
+                          decorationColor: con.naranja),
                     )
                 )
               ],
