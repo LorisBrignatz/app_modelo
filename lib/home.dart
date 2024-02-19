@@ -19,6 +19,7 @@ class _HomeState extends State<Home> {
     titleProducts.add('Addcionales');
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
