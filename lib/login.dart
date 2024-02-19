@@ -22,7 +22,6 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background image with transparency
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -31,7 +30,7 @@ class _LoginState extends State<Login> {
               ),
             ),
             child: Container(
-              color: Colors.black.withOpacity(0.4), // Adjust transparency here
+              color: Colors.black.withOpacity(0.4),
             ),
           ),
           Padding(
@@ -40,7 +39,6 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Logo centré avec transparence
                 Container(
                   margin: EdgeInsets.only(bottom: 30),
                   child: Image.asset(
@@ -77,8 +75,8 @@ class _LoginState extends State<Login> {
                         obscureText: false,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.white, // Change field color to white
-                          focusedBorder: UnderlineInputBorder( // Add focused border
+                          fillColor: Colors.white,
+                          focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           ),
                         ),
@@ -97,8 +95,8 @@ class _LoginState extends State<Login> {
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.white, // Change field color to white
-                          focusedBorder: UnderlineInputBorder( // Add focused border
+                          fillColor: Colors.white,
+                          focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           ),
                         ),
@@ -135,7 +133,6 @@ class _LoginState extends State<Login> {
                       SizedBox(height: 10),
                       InkWell(
                         onTap: () {
-                          // Ajouter votre logique pour gérer le mot de passe oublié
                           print("Olvidaste tu contraseña ?");
                         },
                         child: Text(
