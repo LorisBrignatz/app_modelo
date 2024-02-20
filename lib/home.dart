@@ -10,6 +10,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List titleProducts = [];
+  List<String> products = [];
 
   @override
   void initState(){
@@ -17,7 +18,11 @@ class _HomeState extends State<Home> {
     titleProducts.add('Combos');
     titleProducts.add('Clasicos');
     titleProducts.add('Addcionales');
-    super.initState();
+
+    products.add('id#nombre#imagen.png#calif#favoritos#categoria');
+    products.add('id#nombre#imagen.png#calif#favoritos#categoria');
+    products.add('id#nombre#imagen.png#calif#favoritos#categoria');
+    super.initState;
   }
 
   @override
@@ -86,9 +91,9 @@ class _HomeState extends State<Home> {
 
 class listHomeProduct extends StatelessWidget {
   const listHomeProduct({
-    super.key,
+    Key? key,
     required this.size,
-  });
+  }) : super(key: key);
 
   final Size size;
 
@@ -101,85 +106,97 @@ class listHomeProduct extends StatelessWidget {
         color: con.naranja,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  flex: 6,
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: con.blanco,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset("imagenes/Welcome 2.png",
-                          width: size.width * 0.15,),
-                        Text(
-                          'Hamburguesa',
-                          style: TextStyle(
+      child: SizedBox(
+        height: size.height * 0.65,
+        width: size.width,
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        itemCount: products.length / 2,
+        itemBuilder: (BuildContext context, int index){
+          int j = 0 + 2 = 2;
+          int i = 1 + 2 = 3;
+          var datos = products[j].split('#');
+          var datos2 = products[i].split('#');
+          datos[1];
+          return Padding(
+            padding: EdgeInsets.only(bottom: 15),
+            child: Row(
+            children: [
+              Expanded(
+                flex: 6,
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: con.blanco,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset("imagenes/Welcome 2.png",
+                        width: size.width * 0.15,),
+                      Text(
+                        'Hamburguesa',
+                        style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        Text(
-                          'Nuevo estilo',
-                          style: TextStyle(
+                      ),
+                      Text(
+                        'Nuevo estilo',
+                        style: TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 15),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(Icons.star, color: Colors.yellowAccent, size: 14,),
-                            Icon(Icons.heart_broken_outlined, size: 14,)
-                          ],
-                        )
-                      ],
-                    ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(Icons.star, color: Colors.yellowAccent, size: 14,),
+                          Icon(Icons.heart_broken_outlined, size: 14,)
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(width: 15),
-                Expanded(
-                  flex: 6,
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: con.blanco,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset("imagenes/Welcome 2.png",
-                          width: size.width * 0.15,),
-                        Text(
-                          'Hamburguesa',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        Text(
-                          'Nuevo estilo',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 15),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(Icons.star, color: Colors.yellowAccent, size: 14,),
-                            Icon(Icons.heart_broken_outlined, size: 14,)
-                          ],
-                        )
-                      ],
-                    ),
+              ),
+              SizedBox(width: 15),
+              datos.isNotEmpty ? Expanded(
+                flex: 6,
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: con.blanco,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset("imagenes/Welcome 2.png",
+                        width: size.width * 0.15,),
+                      Text(
+                        'Hamburguesa',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      Text(
+                        'Nuevo estilo',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 15),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(Icons.star, color: Colors.yellowAccent, size: 14,),
+                          Icon(Icons.heart_broken_outlined, size: 14,)
+                        ],
+                      )
+                    ],
                   ),
                 ),
-              ],
-            )
-          ],
-        ),
+              ),
+            ],
+          ),);
+        }
       ),
+    ),
     );
   }
 }
