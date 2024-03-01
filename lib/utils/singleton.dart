@@ -1,9 +1,10 @@
 class Singleton {
   static Singleton? _instance;
 
-  Singleton._internal(){
+  Singleton._internal() {
     _instance = this;
   }
+
   factory Singleton() => _instance ?? Singleton._internal();
 
   String user = '';
@@ -12,14 +13,13 @@ class Singleton {
   List titleProducts = [];
   List products = [];
 
-  int num =0;
   int num1 = 0;
   int num2 = 1;
 
   List lista = [];
   String dato = '';
 
-  void iniciarLista(){
+  void iniciarLista() {
     titleProducts.add('Combos');
     titleProducts.add('Clasicos');
     titleProducts.add('Adicionales');
@@ -34,12 +34,10 @@ class Singleton {
     products.add('8#nombre8#estilo#imagen.png#calif#favoritos#categoria');
   }
 
-  void clearVariables(){
-    num = 0;
+  void clearVariables() {
     lista = [];
     dato = '';
   }
 }
 
-final singleton = Singleton();
-
+final singleton =  Singleton();
