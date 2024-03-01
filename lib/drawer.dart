@@ -1,78 +1,81 @@
 import 'package:flutter/material.dart';
+import 'package:app/utils/singleton.dart';
 
-class drawerWidget extends StatefulWidget {
-  const drawerWidget({Key? key}) : super(key: key);
+class DrawerWidget extends StatefulWidget {
+  final Singleton singleton;
+
+  const DrawerWidget({Key? key, required this.singleton}) : super(key: key);
 
   @override
   _DrawerWidgetState createState() => _DrawerWidgetState();
 }
 
-class _DrawerWidgetState extends State<drawerWidget> {
+class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          const DrawerHeader(
+          DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.green,
-            ), //BoxDecoration
+            ),
             child: UserAccountsDrawerHeader(
               decoration: BoxDecoration(color: Colors.green),
               accountName: Text(
-                "Abhishek Mishra",
+                widget.singleton.user,
                 style: TextStyle(fontSize: 18),
               ),
-              accountEmail: Text("abhishekm977@gmail.com"),
+              accountEmail: Text(widget.singleton.password),
               currentAccountPictureSize: Size.square(50),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Color.fromARGB(255, 165, 255, 137),
                 child: Text(
                   "A",
                   style: TextStyle(fontSize: 30.0, color: Colors.blue),
-                ), //Text
-              ), //circleAvatar
-            ), //UserAccountDrawerHeader
-          ), //DrawerHeader
+                ),
+              ),
+            ),
+          ),
           ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text(' My Profile '),
+            leading: Icon(Icons.person),
+            title: Text(' My Profile '),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: const Icon(Icons.book),
-            title: const Text(' My Course '),
+            leading: Icon(Icons.book),
+            title: Text(' My Course '),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: const Icon(Icons.workspace_premium),
-            title: const Text(' Go Premium '),
+            leading: Icon(Icons.workspace_premium),
+            title: Text(' Go Premium '),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: const Icon(Icons.video_label),
-            title: const Text(' Saved Videos '),
+            leading: Icon(Icons.video_label),
+            title: Text(' Saved Videos '),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text(' Edit Profile '),
+            leading: Icon(Icons.edit),
+            title: Text(' Edit Profile '),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text('LogOut'),
+            leading: Icon(Icons.logout),
+            title: Text('LogOut'),
             onTap: () {
               Navigator.pop(context);
             },

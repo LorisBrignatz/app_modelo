@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/constantes.dart' as con;
+import 'package:app/utils/singleton.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -9,20 +10,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List titleProducts = [];
+  final ScrollController scrollController = ScrollController();
+
+  Singleton singleton = Singleton();
+  List<String> titleProducts = [];
   List<String> products = [];
 
   @override
-  void initState(){
-    titleProducts.add('Todos');
+  void initState() {
+    super.initState();
+    singleton.titleProducts.add('Todos');
+
+    singleton.iniciarLista();
     titleProducts.add('Combos');
     titleProducts.add('Clasicos');
-    titleProducts.add('Addcionales');
+    titleProducts.add('Adicionales');
 
     products.add('id#nombre#imagen.png#calif#favoritos#categoria');
     products.add('id#nombre#imagen.png#calif#favoritos#categoria');
     products.add('id#nombre#imagen.png#calif#favoritos#categoria');
-    super.initState;
   }
 
   @override
@@ -50,7 +56,7 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      drawer: DrawerWidget(),
+      drawer: DrawerWidget(singleton: singleton),
       body: Stack(
         children: [
           Column(
@@ -61,10 +67,7 @@ class _HomeState extends State<Home> {
                   Text(
                     'Qué hay de cenar ?',
                     style: TextStyle(
-                      color: con.amarillo,
-                      fontSize: 24,
-                      letterSpacing: 1.5
-                    ),
+                        color: con.amarillo, fontSize: 24, letterSpacing: 1.5),
                   ),
                 ],
               ),
@@ -75,12 +78,18 @@ class _HomeState extends State<Home> {
                   scrollDirection: Axis.horizontal,
                   physics: const ScrollPhysics(),
                   itemCount: titleProducts.length,
-                  itemBuilder: (BuildContext context, int index){
-                    return Text(titleProducts[index], style: TextStyle(color: con.blanco, fontSize: 10),);
+                  itemBuilder: (BuildContext context, int index) {
+                    return Text(
+                      titleProducts[index],
+                      style: TextStyle(color: con.blanco, fontSize: 10),
+                    );
                   },
                 ),
               ),
-              listHomeProduct(size: size)
+              ListHomeProduct(
+                size: size,
+                products: products,
+              ),
             ],
           )
         ],
@@ -89,13 +98,15 @@ class _HomeState extends State<Home> {
   }
 }
 
-class listHomeProduct extends StatelessWidget {
-  const listHomeProduct({
+class ListHomeProduct extends StatelessWidget {
+  const ListHomeProduct({
     Key? key,
     required this.size,
+    required this.products,
   }) : super(key: key);
 
   final Size size;
+  final List<String> products;
 
   @override
   Widget build(BuildContext context) {
@@ -109,100 +120,76 @@ class listHomeProduct extends StatelessWidget {
       child: SizedBox(
         height: size.height * 0.65,
         width: size.width,
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        itemCount: products.length / 2,
-        itemBuilder: (BuildContext context, int index){
-          int j = 0 + 2 = 2;
-          int i = 1 + 2 = 3;
-          var datos = products[j].split('#');
-          var datos2 = products[i].split('#');
-          datos[1];
-          return Padding(
-            padding: EdgeInsets.only(bottom: 15),
-            child: Row(
-            children: [
-              Expanded(
-                flex: 6,
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: con.blanco,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset("imagenes/Welcome 2.png",
-                        width: size.width * 0.15,),
-                      Text(
-                        'Hamburguesa',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          itemCount: int.parse((singleton.products.length/2).toString()),
+          itemBuilder: (BuildContext context, int index) {
+
+            if (index != 0){
+              singleton.num1 = singleton.num1 + 2;
+              singleton.num2 = singleton.num2 + 2;
+            }
+
+            var datos1 = singleton.products[singleton.num1].split('#');
+            var datos2 = singleton.products[singleton.num2].split('#');
+
+            return Padding(
+              padding: EdgeInsets.only(bottom: 15),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 6,
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: con.blanco,
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      Text(
-                        'Nuevo estilo',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 15),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.star, color: Colors.yellowAccent, size: 14,),
-                          Icon(Icons.heart_broken_outlined, size: 14,)
+                          Image.asset(
+                            "imagenes/Welcome 2.png",
+                            width: size.width * 0.15,
+                          ),
+                          Text(
+                            datos1,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                          Text(
+                            'Nuevo estilo',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 15),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(Icons.star,
+                                  color: Colors.yellowAccent, size: 14),
+                              Icon(Icons.favorite_border, size: 14),
+                            ],
+                          )
                         ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(width: 15),
-              datos.isNotEmpty ? Expanded(
-                flex: 6,
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: con.blanco,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset("imagenes/Welcome 2.png",
-                        width: size.width * 0.15,),
-                      Text(
-                        'Hamburguesa',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
                       ),
-                      Text(
-                        'Nuevo estilo',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 15),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Icon(Icons.star, color: Colors.yellowAccent, size: 14,),
-                          Icon(Icons.heart_broken_outlined, size: 14,)
-                        ],
-                      )
-                    ],
+                    ),
                   ),
-                ),
+                  SizedBox(width: 15),
+                ],
               ),
-            ],
-          ),);
-        }
+            );
+          },
+        ),
       ),
-    ),
     );
   }
 }
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({Key? key}) : super(key: key);
+  final Singleton singleton;
+
+  const DrawerWidget({Key? key, required this.singleton}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -278,3 +265,4 @@ class DrawerWidget extends StatelessWidget {
     );
   }
 }
+

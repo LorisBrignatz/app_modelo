@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:app/home.dart';
 import 'package:app/constantes.dart' as con;
+import 'package:app/utils/singleton.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  const Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
@@ -11,9 +12,35 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final user = TextEditingController();
-  final pass = TextEditingController();
-
+  final password = TextEditingController();
   bool bandera = false;
+
+  Singleton singleton = Singleton();
+  late final SharedPreferences prefs;
+
+  @override
+  void initState() {
+    initPreferences();
+    super.initState();
+  }
+
+  Future<void> initPreferences() async{
+    prefs = await SharedPreferences.getInstance();
+    checkIsLogin();
+  }
+
+  void checkIsLogin(){
+    //String user = prefs.getString('user') ?? '');
+    //String pass = prefs.getString('pass') ?? '');
+    bool band = prefs.getBool('isLogin') ?? false;
+
+    if (band){
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const Home(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +118,7 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(height: 5),
                       TextFormField(
-                        controller: pass,
+                        controller: password,
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
@@ -106,16 +133,22 @@ class _LoginState extends State<Login> {
                         onPressed: () {
                           setState(() {
                             print(user.text);
-                            print(pass.text);
-                            if(user.text == 'loris' && pass.text == '1234'){
-                              Navigator.of(context).push(
+                            print(password.text);
+                            if(user.text == 'loris' && password.text == '1234'){
+                              singleton.user = user.text;
+                              singleton.password = password.text;
+                              prefs.setString('user', user.text);
+                              prefs.setString('pass',password.text);
+                              prefs.setBool('isLogin', true);
+                              Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                   builder: (context) => const Home(),
                                 ),
                               );
                             } else {
+                              setState((){
                               bandera = true;
-                            }
+                            });
                           });
                         },
                         child: const Text(
@@ -162,3 +195,4 @@ class _LoginState extends State<Login> {
     );
   }
 }
+
